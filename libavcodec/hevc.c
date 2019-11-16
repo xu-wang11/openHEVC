@@ -613,7 +613,8 @@ static int hls_slice_header(HEVCContext *s)
     s->avctx->level   = s->sps->ptl.general_ptl.level_idc;
 
     sh->dependent_slice_segment_flag = 0;
-    if (!first_slice_in_pic_flag) {
+    // add by wangxu
+    if (1/*!first_slice_in_pic_flag*/) {
         int slice_address_length;
         if (s->pps->dependent_slice_segments_enabled_flag) {
             sh->dependent_slice_segment_flag = get_bits1(gb);
@@ -642,10 +643,12 @@ static int hls_slice_header(HEVCContext *s)
 if (0)
     s->slice_idx = s->job;
 else
-    s->slice_idx++;
+    // add by wangxu
+    //s->slice_idx++;
 
 #else
-            s->slice_idx++;
+   // add by wangxu
+   //         s->slice_idx++;
 #endif
         }
     } else {
@@ -705,7 +708,7 @@ else
         if (!(sh->slice_type == I_SLICE ||
               sh->slice_type == P_SLICE ||
               sh->slice_type == B_SLICE)) {
-            av_log(s->avctx, AV_LOG_ERROR, "Unknown slice type: %d %d .\n",
+            av_log(s->avctx, AV_LOG_ERROR, "hereUnknown slice type: %d %d .\n",
                    sh->slice_type, sh->first_slice_in_pic_flag);
             return AVERROR_INVALIDDATA;
         }
@@ -3061,13 +3064,19 @@ static int hls_slice_data(HEVCContext *s, const uint8_t *nal, int length)
         ff_reset_entries(s->avctx);
     }
     s->data = nal;
+    // add by wangxu
+    /*
     if (s->sh.first_slice_in_pic_flag){
         s->HEVClc->ctb_tile_rs = 0;
     }
+     */
     for (i = 1; i < s->threads_number; i++) {
+        // add by wangxu
+        /*
         if (s->sh.first_slice_in_pic_flag){
             s->sList[i]->HEVClc->ctb_tile_rs = 0;
         }
+         */
         s->sList[i]->HEVClc->first_qp_group = 1;
         s->sList[i]->HEVClc->qp_y = s->sList[0]->HEVClc->qp_y;
         memcpy(s->sList[i], s, sizeof(HEVCContext));

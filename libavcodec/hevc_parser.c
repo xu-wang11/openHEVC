@@ -193,8 +193,8 @@ static inline int parse_nal_units(AVCodecParserContext *s, AVCodecContext *avctx
                 h->sps = (HEVCSPS*)h->sps_list[h->pps->sps_id]->data;
                 h->vps = (HEVCVPS*)h->vps_list[h->sps->vps_id]->data;
             }
-
-            if (!sh->first_slice_in_pic_flag) {
+            // add by wangxu
+            if (1/*!sh->first_slice_in_pic_flag*/) {
                 int slice_address_length;
 
                 if (h->pps->dependent_slice_segments_enabled_flag)
@@ -222,7 +222,7 @@ static inline int parse_nal_units(AVCodecParserContext *s, AVCodecContext *avctx
             sh->slice_type = get_ue_golomb(gb);
             if (!(sh->slice_type == I_SLICE || sh->slice_type == P_SLICE ||
                   sh->slice_type == B_SLICE)) {
-                av_log(h->avctx, AV_LOG_ERROR, "Unknown slice type: %d.\n",
+                av_log(h->avctx, AV_LOG_ERROR, "2Unknown slice type: %d.\n",
                        sh->slice_type);
                 return AVERROR_INVALIDDATA;
             }
