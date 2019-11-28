@@ -358,7 +358,7 @@ if(WIN32 OR ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "armv7l"))
 else()
     option (BUILD_SHARED_LIBS "enabled static library instead of shared" OFF)
 endif()
-add_library (LibOpenHevcWrapper ${libfilenames} ${YASM_OBJECTS})
+add_library (LibOpenHevcWrapper SHARED ${libfilenames} ${YASM_OBJECTS})
 
 
 if(CRYPTOPP_FOUND)
@@ -369,7 +369,7 @@ endif()
 
 include_directories(. gpac/modules/openhevc_dec/ platform/x86/)
 
-option(ENABLE_EXECUTABLE "Generate the test application" ON)
+option(ENABLE_EXECUTABLE "Generate the test application" OFF)
 
 if(ENABLE_EXECUTABLE)
 
