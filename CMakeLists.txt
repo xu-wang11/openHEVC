@@ -157,6 +157,7 @@ add_definitions("-DPIC")
 add_definitions("-DUSE_SDL")
 AddCompilerFlag("-fpic" C_FLAGS Vc_ARCHITECTURE_FLAGS)
 AddCompilerFlag("-fno-tree-vectorize" C_FLAGS Vc_ARCHITECTURE_FLAGS)
+AddCompilerFlag("-O3" C_FLAGS Vc_ARCHITECTURE_FLAGS)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${Vc_ARCHITECTURE_FLAGS}")
 #find_package(CRYPTOPP_FOUND)
